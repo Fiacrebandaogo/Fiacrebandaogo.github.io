@@ -370,8 +370,6 @@
           <button type="button" id="doc-guide" aria-pressed="false"
                   aria-controls="course-frame">Installation guide</button>
         </div>
-        <a class="btn quiet" id="course-download"
-           href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">Download</a>
         <a class="btn quiet" href="https://github.com/Fiacrebandaogo/formation-python">Notebooks and kit</a>
       </div>
 
@@ -445,7 +443,6 @@
         next.title = d.title;
         old.parentNode.replaceChild(next, old);
 
-        document.getElementById('course-download').href = d.url;
         document.getElementById('course-open').href = d.url;
         document.getElementById('course-stamp').textContent = d.stamp;
       });
