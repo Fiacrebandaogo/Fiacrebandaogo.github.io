@@ -346,6 +346,8 @@
   .notes li::marker { color: var(--ink-faint); }
   .notes b { color: var(--ink); font-weight: 600; }
 
+  .links { display: flex; flex-direction: column; gap: 11px; align-items: flex-start; }
+
   .repo-link {
     display: inline-flex;
     align-items: baseline;
@@ -359,6 +361,13 @@
   }
 
   .repo-link:hover { border-bottom-color: var(--accent); }
+
+  .repo-link .kind {
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+  }
 
   @media (max-width: 880px) {
     .shell {
@@ -476,8 +485,12 @@
           </ul>
         </div>
 
-        <a class="repo-link" href="https://github.com/Fiacrebandaogo/formation-python">
-          Syllabus, notebooks and installation kit on GitHub</a>
+        <div class="links">
+          <a class="repo-link" href="https://github.com/Fiacrebandaogo/formation-python">
+            <span class="kind">GitHub</span>Syllabus, notebooks and installation kit</a>
+          <a class="repo-link" href="https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf">
+            <span class="kind">PDF</span>Installation guide handed to participants — 5 pages, in French</a>
+        </div>
       </div>
     </div>
   </main>
