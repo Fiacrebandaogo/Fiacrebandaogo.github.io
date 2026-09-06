@@ -427,23 +427,27 @@
       }
     };
 
-    var frame = document.getElementById('course-frame');
-    var dl = document.getElementById('course-download');
-    var open = document.getElementById('course-open');
-    var stamp = document.getElementById('course-stamp');
-
     Object.keys(docs).forEach(function (id) {
-      var b = document.getElementById(id);
-      b.addEventListener('click', function () {
+      document.getElementById(id).addEventListener('click', function () {
         var d = docs[id];
+
         Object.keys(docs).forEach(function (other) {
           document.getElementById(other).setAttribute('aria-pressed', other === id ? 'true' : 'false');
         });
-        frame.src = d.url + '#view=FitH';
-        frame.title = d.title;
-        dl.href = d.url;
-        open.href = d.url;
-        stamp.textContent = d.stamp;
+
+        // Assigning src on an iframe that already holds a PDF does not reliably
+        // reload it — the built-in viewer keeps the previous document. Replacing
+        // the element forces a fresh load.
+        var old = document.getElementById('course-frame');
+        var next = document.createElement('iframe');
+        next.id = 'course-frame';
+        next.src = d.url + '#view=FitH';
+        next.title = d.title;
+        old.parentNode.replaceChild(next, old);
+
+        document.getElementById('course-download').href = d.url;
+        document.getElementById('course-open').href = d.url;
+        document.getElementById('course-stamp').textContent = d.stamp;
       });
     });
 
