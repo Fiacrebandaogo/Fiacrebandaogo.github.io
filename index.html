@@ -239,6 +239,45 @@
 
   .btn.quiet:hover { border-color: var(--accent); opacity: 1; }
 
+  .docbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .switch {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .switch button {
+    appearance: none;
+    background: none;
+    border: 0;
+    border-right: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    padding: 9px 17px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .switch button:last-child { border-right: 0; }
+  .switch button:hover { color: var(--ink); }
+
+  .switch button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  .switch button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
   .pdf-frame {
     border: 1px solid var(--rule);
     background: var(--surface);
@@ -320,23 +359,30 @@
     <!-- ================= COURSE ================= -->
     <div role="tabpanel" id="panel-course" aria-labelledby="tab-course" hidden>
       <div class="doc-head">
-        <h2>Python for data analysis — syllabus</h2>
-        <span class="stamp">20 sessions · in French</span>
+        <h2>Python for data analysis</h2>
+        <span class="stamp" id="course-stamp">20 pages · in French</span>
       </div>
 
-      <div class="actions">
-        <a class="btn" href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">Download the syllabus</a>
-        <a class="btn quiet" href="https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf">Installation guide</a>
+      <div class="docbar">
+        <div class="switch" role="group" aria-label="Choose a document">
+          <button type="button" id="doc-syllabus" aria-pressed="true"
+                  aria-controls="course-frame">Syllabus</button>
+          <button type="button" id="doc-guide" aria-pressed="false"
+                  aria-controls="course-frame">Installation guide</button>
+        </div>
+        <a class="btn quiet" id="course-download"
+           href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">Download</a>
         <a class="btn quiet" href="https://github.com/Fiacrebandaogo/formation-python">Notebooks and kit</a>
       </div>
 
       <div class="pdf-frame">
-        <iframe src="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf#view=FitH"
+        <iframe id="course-frame"
+                src="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf#view=FitH"
                 title="Syllabus of the Python for data analysis course"></iframe>
       </div>
 
       <p class="pdf-fallback">If the document does not display in your browser,
-        <a href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">open it in a new tab</a>.</p>
+        <a id="course-open" href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">open it in a new tab</a>.</p>
     </div>
   </main>
 </div>
@@ -365,6 +411,39 @@
         if (e.key === 'Home')       { next = tabs[0]; }
         if (e.key === 'End')        { next = tabs[tabs.length - 1]; }
         if (next) { e.preventDefault(); select(next, true); }
+      });
+    });
+
+    var docs = {
+      'doc-syllabus': {
+        url: 'https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf',
+        title: 'Syllabus of the Python for data analysis course',
+        stamp: '20 pages · in French'
+      },
+      'doc-guide': {
+        url: 'https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf',
+        title: 'Installation guide for the Python for data analysis course',
+        stamp: '5 pages · in French'
+      }
+    };
+
+    var frame = document.getElementById('course-frame');
+    var dl = document.getElementById('course-download');
+    var open = document.getElementById('course-open');
+    var stamp = document.getElementById('course-stamp');
+
+    Object.keys(docs).forEach(function (id) {
+      var b = document.getElementById(id);
+      b.addEventListener('click', function () {
+        var d = docs[id];
+        Object.keys(docs).forEach(function (other) {
+          document.getElementById(other).setAttribute('aria-pressed', other === id ? 'true' : 'false');
+        });
+        frame.src = d.url + '#view=FitH';
+        frame.title = d.title;
+        dl.href = d.url;
+        open.href = d.url;
+        stamp.textContent = d.stamp;
       });
     });
 
