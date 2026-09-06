@@ -20,7 +20,6 @@
     --ink-faint:   #8B979F;
     --rule:        #DDE3E6;
     --accent:      #1B4965;
-    --accent-soft: #E3ECF1;
 
     --serif: "Spectral", Georgia, "Times New Roman", serif;
     --sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -29,26 +28,24 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --paper:       #0F1417;
-      --surface:     #161C21;
-      --ink:         #E4E9EC;
-      --ink-muted:   #96A4AE;
-      --ink-faint:   #6B7A85;
-      --rule:        #26313A;
-      --accent:      #7FB3CC;
-      --accent-soft: #1B2A34;
+      --paper:     #0F1417;
+      --surface:   #161C21;
+      --ink:       #E4E9EC;
+      --ink-muted: #96A4AE;
+      --ink-faint: #6B7A85;
+      --rule:      #26313A;
+      --accent:    #7FB3CC;
     }
   }
 
   :root[data-theme="dark"] {
-    --paper:       #0F1417;
-    --surface:     #161C21;
-    --ink:         #E4E9EC;
-    --ink-muted:   #96A4AE;
-    --ink-faint:   #6B7A85;
-    --rule:        #26313A;
-    --accent:      #7FB3CC;
-    --accent-soft: #1B2A34;
+    --paper:     #0F1417;
+    --surface:   #161C21;
+    --ink:       #E4E9EC;
+    --ink-muted: #96A4AE;
+    --ink-faint: #6B7A85;
+    --rule:      #26313A;
+    --accent:    #7FB3CC;
   }
 
   * { box-sizing: border-box; }
@@ -65,7 +62,7 @@
   .shell {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 56px 32px 96px;
+    padding: 56px 32px 80px;
     display: grid;
     grid-template-columns: 272px 1fr;
     gap: 72px;
@@ -102,6 +99,14 @@
     line-height: 1.6;
   }
 
+  .summary {
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
   .contact {
     display: flex;
     flex-direction: column;
@@ -121,8 +126,8 @@
   .contact a:hover { color: var(--accent); }
 
   .contact a:focus-visible,
-  .tab:focus-visible,
-  .work h3 a:focus-visible {
+  .btn:focus-visible,
+  .pdf-fallback a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
@@ -138,159 +143,40 @@
     flex-shrink: 0;
   }
 
-  /* ---------- tabs ---------- */
+  /* ---------- the CV itself ---------- */
 
-  .tabs {
+  .doc-head {
     display: flex;
-    gap: 30px;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px 20px;
     border-bottom: 1px solid var(--rule);
-    margin-bottom: 40px;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
   }
 
-  .tab {
-    appearance: none;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    padding: 0 0 13px;
-    margin-bottom: -1px;
-    font-family: var(--sans);
-    font-size: 0.94rem;
-    font-weight: 500;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
-  }
-
-  .tab:hover { color: var(--ink); }
-
-  .tab[aria-selected="true"] {
-    color: var(--ink);
-    border-bottom-color: var(--accent);
-  }
-
-  /* ---------- panels ---------- */
-
-  .panel {
-    display: flex;
-    flex-direction: column;
-    gap: 46px;
-  }
-
-  .panel section h2 {
+  .doc-head h2 {
     font-family: var(--mono);
     font-size: 0.69rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.13em;
     color: var(--ink-faint);
-    margin: 0 0 20px;
-    padding-bottom: 9px;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  /* dated entries: the date carries a real ordering, so it gets its own column */
-  .entry {
-    display: grid;
-    grid-template-columns: 118px 1fr;
-    gap: 26px;
-  }
-
-  .entry + .entry,
-  .work + .work {
-    border-top: 1px solid var(--rule);
-    padding-top: 26px;
-    margin-top: 26px;
-  }
-
-  .entry .when {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--ink-faint);
-    padding-top: 4px;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.5;
-  }
-
-  .entry h3,
-  .work h3 {
-    font-family: var(--serif);
-    font-size: 1.11rem;
-    font-weight: 600;
-    margin: 0 0 4px;
-    line-height: 1.35;
-    text-wrap: balance;
-  }
-
-  .entry .where {
-    font-size: 0.86rem;
-    color: var(--accent);
-    margin: 0 0 4px;
-  }
-
-  .entry .meta,
-  .work .meta {
-    font-size: 0.82rem;
-    color: var(--ink-faint);
-    margin: 0 0 11px;
-  }
-
-  .entry p.detail,
-  .work p.detail {
-    margin: 0 0 10px;
-    color: var(--ink-muted);
-    max-width: 62ch;
-  }
-
-  .points {
     margin: 0;
-    padding-left: 17px;
-    color: var(--ink-muted);
-    max-width: 62ch;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
   }
 
-  .points li { padding-left: 3px; }
-  .points li::marker { color: var(--ink-faint); }
-
-  .num { font-variant-numeric: tabular-nums; }
-
-  .work h3 a {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .work h3 a:hover {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
-
-  .stack {
+  .doc-head .stamp {
     font-family: var(--mono);
-    font-size: 0.7rem;
+    font-size: 0.69rem;
     color: var(--ink-faint);
-    margin: 10px 0 0;
-    letter-spacing: 0.02em;
-  }
-
-
-  /* ---------- CV tab: the PDF itself ---------- */
-
-  .pdf-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 22px;
+    letter-spacing: 0.04em;
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
     background: var(--accent);
     color: var(--paper);
     text-decoration: none;
@@ -298,41 +184,36 @@
     font-size: 0.9rem;
     padding: 10px 20px;
     border-radius: 3px;
+    margin-bottom: 22px;
   }
 
   .btn:hover { opacity: 0.88; }
-  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-  .pdf-meta {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.04em;
-  }
 
   .pdf-frame {
     border: 1px solid var(--rule);
     background: var(--surface);
-    height: min(1180px, 88vh);
+    height: min(1240px, 90vh);
   }
 
   .pdf-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
 
-  .pdf-fallback { font-size: 0.84rem; color: var(--ink-faint); margin: 12px 0 0; }
-  .pdf-fallback a { color: var(--accent); }
+  .pdf-fallback {
+    font-size: 0.84rem;
+    color: var(--ink-faint);
+    margin: 12px 0 0;
+  }
 
-  /* mobile browsers refuse to render a PDF in a frame */
-  @media (max-width: 880px) { .pdf-frame { display: none; } }
+  .pdf-fallback a { color: var(--accent); }
 
   @media (max-width: 880px) {
     .shell {
       grid-template-columns: 1fr;
-      gap: 44px;
-      padding: 36px 22px 72px;
+      gap: 40px;
+      padding: 36px 22px 64px;
     }
     .identity { position: static; }
-    .entry { grid-template-columns: 1fr; gap: 7px; }
-    .tabs { gap: 22px; }
+    /* mobile browsers refuse to render a PDF in a frame */
+    .pdf-frame { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -347,209 +228,35 @@
       <h1>Fiacre Bandaogo</h1>
       <p class="role">Applied microeconometrics<br>Development economics</p>
     </div>
+
+    <p class="summary">Research Assistant at CERDI, working on transport infrastructure,
+      trade costs, and climate-related risk.</p>
+
     <nav class="contact">
       <a href="mailto:bandaogofiacre77@gmail.com"><span class="key">Email</span>bandaogofiacre77@gmail.com</a>
       <a href="https://www.linkedin.com/in/fiacre-bandaogo-92a830255/"><span class="key">LinkedIn</span>fiacre-bandaogo</a>
       <a href="https://github.com/Fiacrebandaogo"><span class="key">GitHub</span>Fiacrebandaogo</a>
       <span class="row"><span class="key">Based in</span>Clermont-Ferrand, France</span>
-      <a href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf"><span class="key">CV</span>Download PDF</a>
     </nav>
   </header>
 
   <main>
-    <div class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" role="tab" id="tab-cv" aria-controls="panel-cv" aria-selected="true">CV</button>
-      <button class="tab" role="tab" id="tab-education" aria-controls="panel-education" aria-selected="false" tabindex="-1">Education</button>
-      <button class="tab" role="tab" id="tab-experience" aria-controls="panel-experience" aria-selected="false" tabindex="-1">Experience</button>
+    <div class="doc-head">
+      <h2>Curriculum vitae</h2>
+      <span class="stamp">Updated September 2026</span>
     </div>
 
-    <!-- ================= CV ================= -->
-    <div class="panel" role="tabpanel" id="panel-cv" aria-labelledby="tab-cv">
-      <section>
-        <h2>Curriculum vitae</h2>
-        <div class="pdf-actions">
-          <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
-          <span class="pdf-meta">Updated September 2026</span>
-        </div>
-        <div class="pdf-frame">
-          <iframe src="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf#view=FitH" title="Curriculum vitae of Fiacre Bandaogo" loading="lazy"></iframe>
-        </div>
-        <p class="pdf-fallback">If the document does not display in your browser,
-          <a href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">open it in a new tab</a>.</p>
-      </section>
+    <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
+
+    <div class="pdf-frame">
+      <iframe src="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf#view=FitH"
+              title="Curriculum vitae of Fiacre Bandaogo"></iframe>
     </div>
 
-    <!-- ================= EDUCATION ================= -->
-    <div class="panel" role="tabpanel" id="panel-education" aria-labelledby="tab-education" hidden>
-
-      <section>
-        <h2>Degrees</h2>
-
-        <div class="entry">
-          <div class="when">2022–2025</div>
-          <div>
-            <h3>Master's in Development Economics and Magistère in Economic Development</h3>
-            <p class="where">Université Clermont Auvergne — CERDI</p>
-            <p class="detail">Thesis: <em>Migration, Labor-Saving Technology Adoption, and Agricultural Transformation in Malawi.</em></p>
-            <p class="meta">Supervisors: Simone Bertoli and Vianney Dequiedt</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <div class="when">2020–2023</div>
-          <div>
-            <h3>Bachelor's in Economics</h3>
-            <p class="where">Université Clermont Auvergne — CERDI</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Relevant coursework</h2>
-        <ul class="points">
-          <li>International Migration and Trade Policy — Ricardian, HOS and heterogeneous-firm models; tariff structure and growth.</li>
-          <li>Global Issues and International Institutions.</li>
-          <li>Advanced Econometrics.</li>
-          <li>Impact Evaluation.</li>
-          <li>Survey Design and Survey-Data Processing.</li>
-        </ul>
-      </section>
-    </div>
-
-    <!-- ================= EXPERIENCE ================= -->
-    <div class="panel" role="tabpanel" id="panel-experience" aria-labelledby="tab-experience" hidden>
-
-      <section>
-        <h2>Research positions</h2>
-
-        <div class="entry">
-          <div class="when">Sept. 2025 —<br>present</div>
-          <div>
-            <h3>Research Assistant</h3>
-            <p class="where">CERDI, Université Clermont Auvergne — France</p>
-            <p class="meta">Supervisor: Florent Bresson</p>
-            <p class="detail">INEG-Risque — Inequality, Poverty, and Natural Disaster Mortality (<span class="num">212</span> countries, <span class="num">2000–2025</span>).</p>
-            <ul class="points">
-              <li>Built the geocoding pipeline behind the EM-DAT data note.</li>
-              <li>Compiled the covariate set — GHSL and MODIS via Google Earth Engine, World Bank PIP/WDI, Penn World Table, SWIID — and estimated PPML and negative-binomial models in Stata.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="entry">
-          <div class="when">Apr.–Jun. 2025</div>
-          <div>
-            <h3>Research Intern</h3>
-            <p class="where">CREM, Université de Rennes — France</p>
-            <p class="meta">Supervisors: Giuseppe Maggio and Stefanija Veljanoska</p>
-            <p class="detail">Impact evaluation of Malawi's Farm Input Subsidy Program (FISP) on household migration.</p>
-            <ul class="points">
-              <li>Harmonised a four-wave World Bank LSMS household panel — roughly <span class="num">5,000</span> rural households, <span class="num">2009–2016</span>.</li>
-              <li>Estimated heterogeneity-robust staggered difference-in-differences, Mundlak correlated random effects, and IV Probit in Stata.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="entry">
-          <div class="when">May–Jul. 2024</div>
-          <div>
-            <h3>Research Intern</h3>
-            <p class="where">IRES, Université catholique de Louvain — Belgium</p>
-            <p class="meta">Supervisor: Fabio Mariani</p>
-            <p class="detail">Migration, cultural persistence, and far-right voting in Italy.</p>
-            <ul class="points">
-              <li>Estimated OLS and Poisson regressions with high-dimensional fixed effects on a <span class="num">65</span>-million-record Italian dataset.</li>
-              <li>Estimated difference-in-differences on electoral outcomes, <span class="num">1948–2013</span>; built interactive maps in RShiny.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Teaching</h2>
-
-        <div class="entry">
-          <div class="when">2026</div>
-          <div>
-            <h3>Python for Data Analysis</h3>
-            <p class="detail">Designed and taught a twenty-session course of two and a half hours each, for complete beginners — from the first launch of the environment through to a full analysis project.</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Workshops and seminars</h2>
-
-        <div class="entry">
-          <div class="when">Since 2025</div>
-          <div>
-            <h3>CERDI Development Economics Seminar</h3>
-            <p class="detail">Presenter and discussant.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <div class="when">June 2024</div>
-          <div>
-            <h3>Louvain Fresh Workshop</h3>
-            <p class="where">IRES, UCLouvain</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Code and teaching materials</h2>
-
-        <div class="work">
-          <h3><a href="https://github.com/Fiacrebandaogo/ineg-risque-maps">ineg-risque-maps</a></h3>
-          <p class="detail">Streamlit mapping application built on a dedicated rendering engine, accompanying the INEG-Risque project on inequality, poverty and natural-disaster mortality.</p>
-          <p class="stack">Python · Streamlit</p>
-        </div>
-
-        <div class="work">
-          <h3><a href="https://github.com/Fiacrebandaogo/formation-python">Python for data analysis — a 20-session course</a></h3>
-          <p class="detail">Full teaching kit for complete beginners: syllabus, notebooks generated in participant and solution versions from a single script, and a one-click conda installer for Windows and macOS.</p>
-          <p class="stack">Python · Jupyter · conda · LaTeX</p>
-        </div>
-      </section>
-    </div>
+    <p class="pdf-fallback">If the document does not display in your browser,
+      <a href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">open it in a new tab</a>.</p>
   </main>
 </div>
-
-<script>
-  (function () {
-    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-
-    function select(tab, moveFocus) {
-      tabs.forEach(function (t) {
-        var on = t === tab;
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.tabIndex = on ? 0 : -1;
-        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
-      });
-      if (moveFocus) { tab.focus(); }
-      try { localStorage.setItem('cv-tab', tab.id); } catch (e) { /* storage unavailable */ }
-    }
-
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { select(tab, false); });
-      tab.addEventListener('keydown', function (e) {
-        var next = null;
-        if (e.key === 'ArrowRight') { next = tabs[(i + 1) % tabs.length]; }
-        if (e.key === 'ArrowLeft')  { next = tabs[(i - 1 + tabs.length) % tabs.length]; }
-        if (e.key === 'Home')       { next = tabs[0]; }
-        if (e.key === 'End')        { next = tabs[tabs.length - 1]; }
-        if (next) { e.preventDefault(); select(next, true); }
-      });
-    });
-
-    try {
-      var saved = localStorage.getItem('cv-tab');
-      var match = saved ? document.getElementById(saved) : null;
-      if (match && match.getAttribute('role') === 'tab') { select(match, false); }
-    } catch (e) { /* storage unavailable: the CV tab stays open */ }
-  })();
-</script>
 
 </body>
 </html>
