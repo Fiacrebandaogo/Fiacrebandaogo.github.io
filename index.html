@@ -189,43 +189,6 @@
     border-bottom: 1px solid var(--rule);
   }
 
-  .lede {
-    font-family: var(--serif);
-    font-size: 1.15rem;
-    line-height: 1.62;
-    color: var(--ink);
-    max-width: 64ch;
-    margin: 0;
-  }
-
-  .field-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin: 0;
-  }
-
-  .field-list div {
-    display: grid;
-    grid-template-columns: 92px 1fr;
-    gap: 22px;
-  }
-
-  .field-list dt {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-faint);
-    padding-top: 4px;
-  }
-
-  .field-list dd {
-    margin: 0;
-    color: var(--ink-muted);
-    max-width: 60ch;
-  }
-
   /* dated entries: the date carries a real ordering, so it gets its own column */
   .entry {
     display: grid;
@@ -313,30 +276,53 @@
     letter-spacing: 0.02em;
   }
 
-  .cluster { display: flex; flex-wrap: wrap; gap: 8px; }
 
-  .chip {
-    font-family: var(--mono);
-    font-size: 0.73rem;
-    padding: 4px 11px;
-    background: var(--accent-soft);
-    color: var(--accent);
+  /* ---------- CV tab: the PDF itself ---------- */
+
+  .pdf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--accent);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 10px 20px;
     border-radius: 3px;
   }
 
-  .refs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
-    gap: 26px;
+  .btn:hover { opacity: 0.88; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .pdf-meta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
   }
 
-  .refs div p { margin: 0; }
-  .refs .name { font-weight: 600; color: var(--ink); }
-  .refs .post { color: var(--ink-muted); font-size: 0.88rem; }
-  .refs a { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
-  .refs a:hover { text-decoration: underline; }
+  .pdf-frame {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    height: min(1180px, 88vh);
+  }
 
-  .plain { color: var(--ink-muted); max-width: 64ch; margin: 0; }
+  .pdf-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .pdf-fallback { font-size: 0.84rem; color: var(--ink-faint); margin: 12px 0 0; }
+  .pdf-fallback a { color: var(--accent); }
+
+  /* mobile browsers refuse to render a PDF in a frame */
+  @media (max-width: 880px) { .pdf-frame { display: none; } }
 
   @media (max-width: 880px) {
     .shell {
@@ -346,7 +332,6 @@
     }
     .identity { position: static; }
     .entry { grid-template-columns: 1fr; gap: 7px; }
-    .field-list div { grid-template-columns: 1fr; gap: 3px; }
     .tabs { gap: 22px; }
   }
 
@@ -380,92 +365,17 @@
 
     <!-- ================= CV ================= -->
     <div class="panel" role="tabpanel" id="panel-cv" aria-labelledby="tab-cv">
-
       <section>
-        <h2>Profile</h2>
-        <p class="lede">Development Economics Master's graduate (CERDI) and Research Assistant in applied microeconometrics, working on transport infrastructure, trade costs, and climate-related risk. Combines household-survey, satellite, and geospatial sources with gravity models and causal-inference methods in Stata, R, and Python.</p>
-      </section>
-
-      <section>
-        <h2>Fields and interests</h2>
-        <dl class="field-list">
-          <div>
-            <dt>Fields</dt>
-            <dd>International trade and spatial integration; climate change and inequality; applied microeconometrics and statistics; development economics.</dd>
-          </div>
-          <div>
-            <dt>Interests</dt>
-            <dd>Transport infrastructure and market integration; migration and labor reallocation; disaster exposure and vulnerability.</dd>
-          </div>
-        </dl>
-      </section>
-
-      <section>
-        <h2>Working paper and research in progress</h2>
-
-        <div class="work">
-          <h3>A subnational geocoded dataset of global natural-hazard disasters in EM-DAT, 2000–2025</h3>
-          <p class="meta">Data note with Florent Bresson (CERDI), 2026 · Manuscript available on request</p>
-          <ul class="points">
-            <li>Geocoded <span class="num">9,893</span> EM-DAT natural-hazard events into <span class="num">49,922</span> sub-national administrative polygons across <span class="num">195</span> countries, resolving locations to the fourth administrative level.</li>
-            <li>Built a priority-ordered matching cascade (GAUL/GADM codes, harmonised gazetteer names, then OpenStreetMap and Photon), flagging the provenance of every location; <span class="num">86.4%</span> resolved from structured codes.</li>
-          </ul>
+        <h2>Curriculum vitae</h2>
+        <div class="pdf-actions">
+          <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
+          <span class="pdf-meta">Updated September 2026</span>
         </div>
-
-        <div class="work">
-          <h3>Road Infrastructure and Armed Conflict: Evidence from Ethiopia's Road Sector Development Program</h3>
-          <p class="meta">In progress</p>
-          <ul class="points">
-            <li>Assembled a balanced <span class="num">1997–2024</span> panel of <span class="num">780</span> woredas and <span class="num">15,714</span> kebeles from road-network, ACLED, satellite and climate sources.</li>
-            <li>Computed market-access indices from gravity models with cost-distance travel-time matrices, capturing trade costs and market integration.</li>
-            <li>Designed an identification strategy combining continuous-dose TWFE and a long-difference IV from a minimum spanning tree.</li>
-          </ul>
+        <div class="pdf-frame">
+          <iframe src="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf#view=FitH" title="Curriculum vitae of Fiacre Bandaogo" loading="lazy"></iframe>
         </div>
-      </section>
-
-      <section>
-        <h2>Technical skills and languages</h2>
-        <div class="cluster" style="margin-bottom: 18px;">
-          <span class="chip">Python</span>
-          <span class="chip">Stata</span>
-          <span class="chip">R</span>
-          <span class="chip">QGIS</span>
-          <span class="chip">Google Earth Engine</span>
-          <span class="chip">LaTeX</span>
-          <span class="chip">Excel</span>
-        </div>
-        <p class="plain">French (native); English (fluent).</p>
-      </section>
-
-      <section>
-        <h2>Code and teaching materials</h2>
-
-        <div class="work">
-          <h3><a href="https://github.com/Fiacrebandaogo/ineg-risque-maps">ineg-risque-maps</a></h3>
-          <p class="detail">Streamlit mapping application built on a dedicated rendering engine, accompanying the INEG-Risque project on inequality, poverty and natural-disaster mortality.</p>
-          <p class="stack">Python · Streamlit</p>
-        </div>
-
-        <div class="work">
-          <h3><a href="https://github.com/Fiacrebandaogo/formation-python">Python for data analysis — a 20-session course</a></h3>
-          <p class="detail">Full teaching kit for complete beginners: syllabus, notebooks generated in participant and solution versions from a single script, and a one-click conda installer for Windows and macOS.</p>
-          <p class="stack">Python · Jupyter · conda · LaTeX</p>
-        </div>
-      </section>
-
-      <section>
-        <h2>References</h2>
-        <div class="refs">
-          <div>
-            <p class="name">Florent Bresson</p>
-            <p class="post">Associate Professor, CERDI, Université Clermont Auvergne</p>
-          </div>
-          <div>
-            <p class="name">Pierre Biscaye</p>
-            <p class="post">Junior Professor, CERDI, Université Clermont Auvergne</p>
-          </div>
-        </div>
-        <p class="plain" style="margin-top:20px;font-size:0.88rem;">Contact details available on request.</p>
+        <p class="pdf-fallback">If the document does not display in your browser,
+          <a href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">open it in a new tab</a>.</p>
       </section>
     </div>
 
@@ -584,6 +494,22 @@
             <h3>Louvain Fresh Workshop</h3>
             <p class="where">IRES, UCLouvain</p>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Code and teaching materials</h2>
+
+        <div class="work">
+          <h3><a href="https://github.com/Fiacrebandaogo/ineg-risque-maps">ineg-risque-maps</a></h3>
+          <p class="detail">Streamlit mapping application built on a dedicated rendering engine, accompanying the INEG-Risque project on inequality, poverty and natural-disaster mortality.</p>
+          <p class="stack">Python · Streamlit</p>
+        </div>
+
+        <div class="work">
+          <h3><a href="https://github.com/Fiacrebandaogo/formation-python">Python for data analysis — a 20-session course</a></h3>
+          <p class="detail">Full teaching kit for complete beginners: syllabus, notebooks generated in participant and solution versions from a single script, and a one-click conda installer for Windows and macOS.</p>
+          <p class="stack">Python · Jupyter · conda · LaTeX</p>
         </div>
       </section>
     </div>
