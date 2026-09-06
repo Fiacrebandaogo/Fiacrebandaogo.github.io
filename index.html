@@ -131,8 +131,7 @@
   .contact a:focus-visible,
   .tab:focus-visible,
   .btn:focus-visible,
-  .pdf-fallback a:focus-visible,
-  .repo-link:focus-visible {
+  .pdf-fallback a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
@@ -179,7 +178,7 @@
     border-bottom-color: var(--accent);
   }
 
-  /* ---------- shared section head ---------- */
+  /* ---------- document panels ---------- */
 
   .doc-head {
     display: flex;
@@ -188,7 +187,7 @@
     gap: 10px 20px;
     border-bottom: 1px solid var(--rule);
     padding-bottom: 13px;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
   }
 
   .doc-head h2 {
@@ -210,7 +209,12 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* ---------- the CV ---------- */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
 
   .btn {
     display: inline-flex;
@@ -221,11 +225,19 @@
     font-weight: 500;
     font-size: 0.9rem;
     padding: 10px 20px;
+    border: 1px solid var(--accent);
     border-radius: 3px;
-    margin-bottom: 22px;
   }
 
   .btn:hover { opacity: 0.88; }
+
+  .btn.quiet {
+    background: none;
+    color: var(--accent);
+    border-color: var(--rule);
+  }
+
+  .btn.quiet:hover { border-color: var(--accent); opacity: 1; }
 
   .pdf-frame {
     border: 1px solid var(--rule);
@@ -242,132 +254,6 @@
   }
 
   .pdf-fallback a { color: var(--accent); }
-
-  /* ---------- the course ---------- */
-
-  .course { display: flex; flex-direction: column; gap: 34px; }
-
-  .lede {
-    font-family: var(--serif);
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: var(--ink);
-    max-width: 64ch;
-    margin: 0;
-  }
-
-  .figures {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 34px;
-    padding: 18px 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .figures div { display: flex; flex-direction: column; gap: 2px; }
-
-  .figures .n {
-    font-family: var(--serif);
-    font-size: 1.7rem;
-    font-weight: 600;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .figures .l {
-    font-family: var(--mono);
-    font-size: 0.67rem;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: var(--ink-faint);
-  }
-
-  h3.block {
-    font-family: var(--mono);
-    font-size: 0.69rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: var(--ink-faint);
-    margin: 0 0 14px;
-  }
-
-  .scroller { overflow-x: auto; }
-
-  table.modules {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-    min-width: 460px;
-  }
-
-  table.modules th {
-    text-align: left;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-faint);
-    padding: 0 18px 9px 0;
-    border-bottom: 1px solid var(--rule);
-    white-space: nowrap;
-  }
-
-  table.modules td {
-    padding: 11px 18px 11px 0;
-    border-bottom: 1px solid var(--rule);
-    color: var(--ink-muted);
-    vertical-align: top;
-  }
-
-  table.modules td:first-child,
-  table.modules td:nth-child(2) {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--ink);
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-
-  table.modules tr:last-child td { border-bottom: 0; }
-
-  .notes {
-    margin: 0;
-    padding-left: 17px;
-    color: var(--ink-muted);
-    max-width: 64ch;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-
-  .notes li::marker { color: var(--ink-faint); }
-  .notes b { color: var(--ink); font-weight: 600; }
-
-  .links { display: flex; flex-direction: column; gap: 11px; align-items: flex-start; }
-
-  .repo-link {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 9px;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent-soft);
-    padding-bottom: 2px;
-  }
-
-  .repo-link:hover { border-bottom-color: var(--accent); }
-
-  .repo-link .kind {
-    font-size: 0.64rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-faint);
-  }
 
   @media (max-width: 880px) {
     .shell {
@@ -418,7 +304,9 @@
         <span class="stamp">Updated September 2026</span>
       </div>
 
-      <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
+      <div class="actions">
+        <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
+      </div>
 
       <div class="pdf-frame">
         <iframe src="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf#view=FitH"
@@ -432,66 +320,23 @@
     <!-- ================= COURSE ================= -->
     <div role="tabpanel" id="panel-course" aria-labelledby="tab-course" hidden>
       <div class="doc-head">
-        <h2>Python for data analysis</h2>
-        <span class="stamp">Taught in French</span>
+        <h2>Python for data analysis — syllabus</h2>
+        <span class="stamp">20 sessions · in French</span>
       </div>
 
-      <div class="course">
-        <p class="lede">A course I designed and teach for people who have never written a line
-          of code. It ends where it should: a participant takes a raw CSV, Excel or SQL extract,
-          cleans it, explores it, produces the statistics and the charts, and presents the
-          conclusions without help.</p>
-
-        <div class="figures">
-          <div><span class="n">20</span><span class="l">sessions</span></div>
-          <div><span class="n">2h30</span><span class="l">each</span></div>
-          <div><span class="n">50</span><span class="l">contact hours</span></div>
-          <div><span class="n">30/70</span><span class="l">lecture / keyboard</span></div>
-        </div>
-
-        <div>
-          <h3 class="block">The route through</h3>
-          <div class="scroller">
-            <table class="modules">
-              <thead>
-                <tr><th>Module</th><th>Sessions</th><th>Focus</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>0</td><td>before 1</td><td>Installing Anaconda and JupyterLab</td></tr>
-                <tr><td>1</td><td>1–5</td><td>Language fundamentals: variables, lists, functions, conditionals, dictionaries, loops</td></tr>
-                <tr><td>2</td><td>6–7</td><td>NumPy: arrays and statistics</td></tr>
-                <tr><td>3</td><td>8–12</td><td>pandas: DataFrames, filtering, aggregation, joins, consolidation</td></tr>
-                <tr><td>4</td><td>13–14</td><td>Importing from every source, and cleaning real data</td></tr>
-                <tr><td>5</td><td>15–17</td><td>Visualisation: Matplotlib, Seaborn, communicating through charts</td></tr>
-                <tr><td>6</td><td>18–19</td><td>Descriptive statistics and a complete exploratory pass</td></tr>
-                <tr><td>—</td><td>20</td><td>Final project presentations</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="block">How it is built</h3>
-          <ul class="notes">
-            <li><b>At most 45 minutes of lecture per session.</b> The remaining two hours are
-              spent at the keyboard. Beginners lose a language by watching it, not by writing it.</li>
-            <li><b>Installation is a double-click.</b> A launcher decides on its own whether to
-              install, update, or simply start, and places the conda environment outside any
-              synchronised folder — a Drive or OneDrive directory silently corrupts it.</li>
-            <li><b>Every notebook exists twice</b>, in a participant version and a solved
-              version, both generated from one script so the two can never drift apart.</li>
-            <li><b>Reproducible work from session one:</b> relative paths only, a fixed folder
-              layout, and a naming convention — the habits that survive the course.</li>
-          </ul>
-        </div>
-
-        <div class="links">
-          <a class="repo-link" href="https://github.com/Fiacrebandaogo/formation-python">
-            <span class="kind">GitHub</span>Syllabus, notebooks and installation kit</a>
-          <a class="repo-link" href="https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf">
-            <span class="kind">PDF</span>Installation guide handed to participants — 5 pages, in French</a>
-        </div>
+      <div class="actions">
+        <a class="btn" href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">Download the syllabus</a>
+        <a class="btn quiet" href="https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf">Installation guide</a>
+        <a class="btn quiet" href="https://github.com/Fiacrebandaogo/formation-python">Notebooks and kit</a>
       </div>
+
+      <div class="pdf-frame">
+        <iframe src="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf#view=FitH"
+                title="Syllabus of the Python for data analysis course"></iframe>
+      </div>
+
+      <p class="pdf-fallback">If the document does not display in your browser,
+        <a href="https://fiacrebandaogo.github.io/Programme_Formation_Python.pdf">open it in a new tab</a>.</p>
     </div>
   </main>
 </div>
