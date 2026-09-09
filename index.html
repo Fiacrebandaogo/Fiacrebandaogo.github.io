@@ -20,6 +20,7 @@
     --ink-faint:   #8B979F;
     --rule:        #DDE3E6;
     --accent:      #1B4965;
+    --accent-soft: #E3ECF1;
 
     --serif: "Spectral", Georgia, "Times New Roman", serif;
     --sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -35,6 +36,7 @@
       --ink-faint:   #6B7A85;
       --rule:        #26313A;
       --accent:      #7FB3CC;
+      --accent-soft: #1B2A34;
     }
   }
 
@@ -46,6 +48,7 @@
     --ink-faint:   #6B7A85;
     --rule:        #26313A;
     --accent:      #7FB3CC;
+    --accent-soft: #1B2A34;
   }
 
   * { box-sizing: border-box; }
@@ -126,6 +129,7 @@
   .contact a:hover { color: var(--accent); }
 
   .contact a:focus-visible,
+  .tab:focus-visible,
   .btn:focus-visible,
   .pdf-fallback a:focus-visible {
     outline: 2px solid var(--accent);
@@ -143,7 +147,38 @@
     flex-shrink: 0;
   }
 
-  /* ---------- the document ---------- */
+  /* ---------- tabs ---------- */
+
+  .tabs {
+    display: flex;
+    gap: 30px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 34px;
+  }
+
+  .tab {
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0 0 13px;
+    margin-bottom: -1px;
+    font-family: var(--sans);
+    font-size: 0.94rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .tab:hover { color: var(--ink); }
+
+  .tab[aria-selected="true"] {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ---------- document panels ---------- */
 
   .doc-head {
     display: flex;
@@ -196,6 +231,22 @@
 
   .btn:hover { opacity: 0.88; }
 
+  .btn.quiet {
+    background: none;
+    color: var(--accent);
+    border-color: var(--rule);
+  }
+
+  .btn.quiet:hover { border-color: var(--accent); opacity: 1; }
+
+  .docbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
   .pdf-frame {
     border: 1px solid var(--rule);
     background: var(--surface);
@@ -219,6 +270,7 @@
       padding: 36px 22px 64px;
     }
     .identity { position: static; }
+    .tabs { gap: 22px; }
     /* mobile browsers refuse to render a PDF in a frame */
     .pdf-frame { display: none; }
   }
@@ -248,25 +300,87 @@
   </header>
 
   <main>
-    <div class="doc-head">
-      <h2>Curriculum vitae</h2>
-      <span class="stamp">Updated September 2026</span>
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" id="tab-cv" aria-controls="panel-cv" aria-selected="true">CV</button>
+      <button class="tab" role="tab" id="tab-course" aria-controls="panel-course" aria-selected="false" tabindex="-1">Python course</button>
     </div>
 
-    <div class="actions">
-      <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
+    <!-- ================= CV ================= -->
+    <div role="tabpanel" id="panel-cv" aria-labelledby="tab-cv">
+      <div class="doc-head">
+        <h2>Curriculum vitae</h2>
+        <span class="stamp">Updated September 2026</span>
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">Download the PDF</a>
+      </div>
+
+      <div class="pdf-frame">
+        <iframe src="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf#view=FitH"
+                title="Curriculum vitae of Fiacre Bandaogo"></iframe>
+      </div>
+
+      <p class="pdf-fallback">If the document does not display in your browser,
+        <a href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">open it in a new tab</a>.</p>
     </div>
 
-    <div class="pdf-frame">
-      <iframe src="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf#view=FitH"
-              title="Curriculum vitae of Fiacre Bandaogo"></iframe>
-    </div>
+    <!-- ================= COURSE ================= -->
+    <div role="tabpanel" id="panel-course" aria-labelledby="tab-course" hidden>
+      <div class="doc-head">
+        <h2>Python for data analysis — installation guide</h2>
+        <span class="stamp">6 pages · in French</span>
+      </div>
 
-    <p class="pdf-fallback">If the document does not display in your browser,
-      <a href="https://fiacrebandaogo.github.io/CV_Fiacre_Bandaogo.pdf">open it in a new tab</a>.</p>
+      <div class="docbar">
+        <a class="btn quiet" href="https://github.com/Fiacrebandaogo/formation-python/tree/main/formation_python">Notebooks and kit</a>
+      </div>
+
+      <div class="pdf-frame">
+        <iframe src="https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf#view=FitH"
+                title="Installation guide for the Python for data analysis course"></iframe>
+      </div>
+
+      <p class="pdf-fallback">If the document does not display in your browser,
+        <a href="https://fiacrebandaogo.github.io/Guide_installation_Anaconda.pdf">open it in a new tab</a>.</p>
+    </div>
   </main>
 </div>
 
+<script>
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+
+    function select(tab, moveFocus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (moveFocus) { tab.focus(); }
+      try { localStorage.setItem('fb-tab', tab.id); } catch (e) { /* storage unavailable */ }
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab, false); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') { next = tabs[(i + 1) % tabs.length]; }
+        if (e.key === 'ArrowLeft')  { next = tabs[(i - 1 + tabs.length) % tabs.length]; }
+        if (e.key === 'Home')       { next = tabs[0]; }
+        if (e.key === 'End')        { next = tabs[tabs.length - 1]; }
+        if (next) { e.preventDefault(); select(next, true); }
+      });
+    });
+
+    try {
+      var saved = localStorage.getItem('fb-tab');
+      var match = saved ? document.getElementById(saved) : null;
+      if (match && match.getAttribute('role') === 'tab') { select(match, false); }
+    } catch (e) { /* storage unavailable: the CV tab stays open */ }
+  })();
+</script>
 
 </body>
 </html>
